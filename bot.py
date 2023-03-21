@@ -1,14 +1,10 @@
 import asyncio
-import configparser
 import discord
 from discord.ext.commands import Bot
+from helpers import config_manager
 import os
 
-# TODO: Create a proper configuration manager
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-DISCORD_TOKEN = config['TOKENS']['DISCORD_TOKEN']
+bot_config = config_manager.ConfigManager()
 
 bot = Bot(
     command_prefix='!',
@@ -38,4 +34,4 @@ asyncio.run(load_cogs())
 
 
 if __name__ == '__main__':
-    bot.run(DISCORD_TOKEN)
+    bot.run(bot_config.get_discord_token())
