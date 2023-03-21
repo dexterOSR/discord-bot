@@ -19,5 +19,14 @@ class Utility(commands.Cog):
         await ctx.send(embed=embed)
 
 
+    @commands.hybrid_command(
+        name="clear",
+        description="Elimina N cantidad de mensajes en el canal de texto donde fue invocado.",
+        aliases=['c', 'purge']
+    )
+    async def clear(self, ctx, amount=1):
+        await ctx.channel.purge(limit=amount+1)
+
+
 async def setup(bot):
     await bot.add_cog(Utility(bot))
