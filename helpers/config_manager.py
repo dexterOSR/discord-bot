@@ -26,3 +26,10 @@ class ConfigManager():
     def get_maximum_temp_voice_channels(self):
         return int(self.config.get('CHANNELS', 'MAXIMUM_TEMP_VOICE'))
     
+    
+    def get_time_before_delete_voice_channel(self):
+        return int(self.config.get('CHANNELS', 'TIME_BEFORE_DELETE_VC'))
+
+
+    def get_time_before_delete_text_channel(self):
+        return int(self.config.get('CHANNELS', 'TIME_BEFORE_DELETE_TC'))

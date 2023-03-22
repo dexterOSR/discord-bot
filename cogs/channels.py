@@ -21,6 +21,7 @@ class Channels(commands.Cog):
     
     async def temp_voice(self, ctx, name=None, user_limit = 2):
         category = ctx.guild.get_channel(bot_config.get_temp_voice_category_id())
+        time_before_deleting_vc = bot_config.get_time_before_delete_voice_channel()
 
         if name is None:
             name = f"{ctx.author.name}"
@@ -34,9 +35,9 @@ class Channels(commands.Cog):
         voice_state = ctx.author.voice
 
         if voice_state is None:
-            await ctx.send(f"{ctx.author.mention} Tú canal de voz '{name}' fue creado correctamente, sin embargo no te hemos podido mover a el de manera automática. Recuerda que el canal de voz se eliminará automáticamente después de que este permanezca vacío por más de 1 minuto.")
+            await ctx.send(f"{ctx.author.mention} Tú canal de voz '{name}' fue creado correctamente, sin embargo no te hemos podido mover a el de manera automática. Recuerda que el canal de voz se eliminará automáticamente después de que este permanezca vacío por {time_before_deleting_vc} segundos.")
         else:
-            await ctx.send(f"{ctx.author.mention} Tú canal de voz '{name}' fue creado correctamente. Recuerda que el canal de voz se eliminará automáticamente después de que este permanezca vacío por más de 1 minuto.")
+            await ctx.send(f"{ctx.author.mention} Tú canal de voz '{name}' fue creado correctamente. Recuerda que el canal de voz se eliminará automáticamente después de que este permanezca vacío por {time_before_deleting_vc} segundos.")
             await ctx.author.move_to(voice_channel)
 
 
@@ -50,12 +51,15 @@ class Channels(commands.Cog):
     async def temp_text(self, ctx, name=None):
         
         category = ctx.guild.get_channel(bot_config.get_temp_text_category_id())
+        time_before_deleting_tc = bot_config.get_time_before_delete_text_channel()
 
         if name is None:
             name = f"{ctx.author.name}"
 
-        text_channel = await ctx.guild.create_text_channel(name=name, category=category)
-        await ctx.send(f"{ctx.author.mention} Tú canal de texto '{name}' fue creado correctamente. Recuerda que el canal será eliminado automáticamente después de 2 horas.")
+        await ctx.guild.create_text_channel(name=name, category=category)
+        await ctx.send(f"{ctx.author.mention} Tú canal de texto '{name}' fue creado correctamente. Recuerda que el canal será eliminado automáticamente después de {time_before_deleting_tc} segundos.")
+
+
 
 
 async def setup(bot):

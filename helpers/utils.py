@@ -1,3 +1,4 @@
+import asyncio
 from discord.ext import commands
 
 
@@ -13,3 +14,4 @@ def category_channels(category_id, number=1):
             return False
         return True
     return commands.check(predicate)
+
